@@ -14,7 +14,7 @@ jobs:
         projectPath:
           - unity-actions
         unityVersion:
-          - 2019.2.11f1
+          - 2020.1.4f1
         targetPlatform:
           - iOS
           - Android
