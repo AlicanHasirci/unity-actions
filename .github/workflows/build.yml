@@ -34,13 +34,13 @@ jobs:
           restore-keys: |
             Library-${{ matrix.projectPath }}-
             Library-
-      - uses: webbertakken/unity-test-runner@v1.4
-        id: testRunner
+      - uses: webbertakken/unity-test-runner@v1.7
+        id: tests
         with:
-          unityVersion: ${{ matrix.unityVersion }}
           testMode: editmode
+          unityVersion: ${{ matrix.unityVersion }}
           artifactsPath: test-artifacts
       - uses: actions/upload-artifact@v2.2.1
         with:
           name: Test results (all modes)
-          path: ${{ steps.testRunner.outputs.artifactsPath }}
+          path: ${{ steps.tests.outputs.artifactsPath }}
