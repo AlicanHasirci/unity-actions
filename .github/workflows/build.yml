@@ -14,7 +14,7 @@ jobs:
         projectPath:
           - botany-tycoon
         unityVersion:
-          - 2020.1.4f1
+          - 2020.1.13f1
         targetPlatform:
           - iOS
           - Android
