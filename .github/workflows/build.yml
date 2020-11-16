@@ -38,7 +38,9 @@ jobs:
         id: testRunner
         with:
           unityVersion: ${{ matrix.unityVersion }}
-      - uses: actions/upload-artifact@v1
+          testMode: editmode
+          artifactsPath: test-artifacts
+      - uses: actions/upload-artifact@v2.2.1
         with:
           name: Test results (all modes)
           path: ${{ steps.testRunner.outputs.artifactsPath }}
