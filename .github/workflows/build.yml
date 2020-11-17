@@ -48,4 +48,4 @@ jobs:
       - uses: actions/upload-artifact@v2.2.1
         with:
           name: ${{ matrix.targetPlatform }}-${{ steps.build.outputs.buildVersion }}
-          path: ${{ matrix.buildsPath }}/${{ matrix.projectName }}
+          path: ${{ matrix.buildsPath }}/${{ matrix.targetPlatform }}
