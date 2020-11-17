@@ -33,11 +33,13 @@ jobs:
           restore-keys: |
             Library-${{ matrix.targetPlatform }}
       - uses: webbertakken/unity-builder@v2.0-alpha-3
+        id: build
         with:
+          versioning: Semantic
           projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
       - uses: actions/upload-artifact@v2.2.1
         with:
-          name: Build
-          path: build
+          name: ${{ matrix.targetPlatform }}-build-${{ steps.build.outputs.buildVersion }}
+          path: ${{ matrix.targetPlatform }}-build
