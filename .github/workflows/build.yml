@@ -31,7 +31,7 @@ jobs:
           path: ${{ matrix.projectPath }}/Library
           key: Library-${{ matrix.targetPlatform }}
           restore-keys: |
-            Library-
+            Library-${{ matrix.targetPlatform }}
       - uses: webbertakken/unity-builder@v2.0-alpha-3
         with:
           projectPath: ${{ matrix.projectPath }}
