@@ -20,7 +20,7 @@ namespace Editor
             {"androidKeystorePass", "androidKeyaliasName", "androidKeyaliasPass"};
 
         [UsedImplicitly]
-        public static void BuildOptions()
+        public static void CustomBuild()
         {
             // Gather values from args
             Dictionary<string, string> options = GetValidatedOptions();
@@ -28,7 +28,7 @@ namespace Editor
             // Set version for this build
             PlayerSettings.bundleVersion = options["buildVersion"];
             PlayerSettings.macOS.buildNumber = options["buildVersion"];
-            // PlayerSettings.Android.bundleVersionCode = int.Parse(options["androidVersionCode"]);
+            PlayerSettings.Android.bundleVersionCode = int.Parse(options["androidVersionCode"]);
 
             // Apply build target
             var buildTarget = (BuildTarget) Enum.Parse(typeof(BuildTarget), options["buildTarget"]);
