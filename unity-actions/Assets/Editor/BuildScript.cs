@@ -1,10 +1,5 @@
-﻿/* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using UnityEditor;
@@ -20,17 +15,13 @@ namespace Editor
             {"androidKeystorePass", "androidKeyaliasName", "androidKeyaliasPass"};
 
         [UsedImplicitly]
-        public static void BuildOptions()
+        public static void CustomBuild()
         {
-            // Gather values from args
-            Dictionary<string, string> options = GetValidatedOptions();
+            var options = GetValidatedOptions();
 
-            // Set version for this build
             PlayerSettings.bundleVersion = options["buildVersion"];
             PlayerSettings.macOS.buildNumber = options["buildVersion"];
-            PlayerSettings.Android.bundleVersionCode = int.Parse(options["androidVersionCode"]);
 
-            // Apply build target
             var buildTarget = (BuildTarget) Enum.Parse(typeof(BuildTarget), options["buildTarget"]);
             switch (buildTarget)
             {
@@ -50,12 +41,27 @@ namespace Editor
                         PlayerSettings.Android.keyaliasPass = keyaliasPass;
                     break;
                 }
-                case BuildTarget.StandaloneOSX:
+                case BuildTarget.iOS:
                     PlayerSettings.SetScriptingBackend(BuildTargetGroup.Standalone, ScriptingImplementation.Mono2x);
                     break;
             }
 
             Build(buildTarget, options["customBuildPath"]);
+        }
+        private static void Build(BuildTarget buildTarget, string filePath)
+        {
+            var scenes = EditorBuildSettings.scenes.Where(scene => scene.enabled).Select(s => s.path).ToArray();
+            var buildPlayerOptions = new BuildPlayerOptions
+            {
+                scenes = scenes,
+                target = buildTarget,
+                locationPathName = filePath,
+                options = BuildOptions.Development
+            };
+
+            var buildSummary = BuildPipeline.BuildPlayer(buildPlayerOptions).summary;
+            ReportSummary(buildSummary);
+            ExitWithResult(buildSummary.result);
         }
 
         private static Dictionary<string, string> GetValidatedOptions()
@@ -133,23 +139,6 @@ namespace Editor
             }
         }
 
-        private static void Build(BuildTarget buildTarget, string filePath)
-        {
-            string[] scenes = EditorBuildSettings.scenes.Where(scene => scene.enabled).Select(s => s.path).ToArray();
-            var buildPlayerOptions = new BuildPlayerOptions
-            {
-                scenes = scenes,
-                target = buildTarget,
-//                targetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget),
-                locationPathName = filePath,
-                options = UnityEditor.BuildOptions.Development
-            };
-
-            BuildSummary buildSummary = BuildPipeline.BuildPlayer(buildPlayerOptions).summary;
-            ReportSummary(buildSummary);
-            ExitWithResult(buildSummary.result);
-        }
-
         private static void ReportSummary(BuildSummary summary)
         {
             Console.WriteLine(
@@ -182,7 +171,6 @@ namespace Editor
                     Console.WriteLine("Build cancelled!");
                     EditorApplication.Exit(102);
                     break;
-                case BuildResult.Unknown:
                 default:
                     Console.WriteLine("Build result is unknown!");
                     EditorApplication.Exit(103);
