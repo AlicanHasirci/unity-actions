@@ -14,10 +14,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        projectPath:
-          - /home/runner/work/unity-actions/unity-actions
         buildsPath:
-          - home/runner/work/unity-actions/builds
+          - builds
         unityVersion:
           - 2020.1.4f1
         targetPlatform:
@@ -38,7 +36,6 @@ jobs:
         id: build
         with:
           versioning: Semantic
-          projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
           buildsPath: ${{ matrix.buildsPath }}
