@@ -1,8 +1,6 @@
 name: Build 🛠
 
-on:
-  pull_request: {}
-  push: { branches: [main] }
+on: workflow_dispatch
 
 env:
   UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
