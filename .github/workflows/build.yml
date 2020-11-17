@@ -36,6 +36,7 @@ jobs:
         id: build
         with:
           versioning: Semantic
+          projectPath: unity-actions
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
           buildsPath: ${{ matrix.buildsPath }}
