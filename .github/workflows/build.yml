@@ -1,6 +1,7 @@
 name: Android Build 🛠
 
-on: workflow_dispatch
+on:
+  push: { branches: [main] }
 
 env:
   UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
@@ -44,6 +45,7 @@ jobs:
           buildsPath: ${{ matrix.buildsPath }}
           buildName: ${{ matrix.projectName }}
           buildMethod: Editor.BuildScript.CustomBuild
+          allowDirtyBuild: true
       - uses: actions/upload-artifact@v2.2.1
         with:
           name: ${{ matrix.targetPlatform }}-${{ steps.build.outputs.buildVersion }}
