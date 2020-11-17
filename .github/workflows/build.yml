@@ -1,4 +1,4 @@
-name: Build 🛠
+name: Android Build 🛠
 
 on: workflow_dispatch
 
