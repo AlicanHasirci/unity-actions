@@ -1,4 +1,4 @@
-name: Actions 😎
+name: Build
 
 on:
   pull_request: {}
@@ -18,6 +18,8 @@ jobs:
       matrix:
         projectPath:
           - /home/runner/work/unity-actions/unity-actions
+        buildsPath:
+          - /home/runner/work/unity-actions/builds
         unityVersion:
           - 2020.1.4f1
         targetPlatform:
@@ -39,7 +41,8 @@ jobs:
           projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
+          buildsPath: ${{ matrix.buildsPath }}
       - uses: actions/upload-artifact@v2.2.1
         with:
-          name: ${{ matrix.targetPlatform }}-build-${{ steps.build.outputs.buildVersion }}
-          path: ${{ matrix.targetPlatform }}-build
+          name: ${{ matrix.targetPlatform }}-${{ steps.build.outputs.buildVersion }}
+          path: ${{ matrix.buildsPath }}/${{ matrix.targetPlatform }}
