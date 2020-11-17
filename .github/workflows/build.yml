@@ -14,8 +14,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        projectPath:
+          - unity-actions
         buildsPath:
-          - builds
+          - home/runner/work/botany-tycoon/builds
         unityVersion:
           - 2020.1.4f1
         targetPlatform:
@@ -28,7 +30,7 @@ jobs:
           lfs: true
       - uses: actions/cache@v2.1.3
         with:
-          path: Library
+          path: ${{ matrix.projectPath }}/Library
           key: Library-${{ matrix.targetPlatform }}
           restore-keys: |
             Library-${{ matrix.targetPlatform }}
@@ -36,11 +38,12 @@ jobs:
         id: build
         with:
           versioning: Semantic
+          projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
           buildsPath: ${{ matrix.buildsPath }}
           buildName: ${{ matrix.projectName }}
-          buildMethod: Editor.BuildScript.BuildOptions
+          buildMethod: Editor.BuildScript.CustomBuild
       - uses: actions/upload-artifact@v2.2.1
         with:
           name: ${{ matrix.targetPlatform }}-${{ steps.build.outputs.buildVersion }}
