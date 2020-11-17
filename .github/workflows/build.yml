@@ -1,4 +1,4 @@
-name: Build
+name: Build 🛠
 
 on:
   pull_request: {}
@@ -11,19 +11,21 @@ env:
 
 jobs:
   buildAndTestForSomePlatforms:
-    name: Test build for on version ${{ matrix.unityVersion }}
+    name: Android Build ${{ matrix.unityVersion }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         projectPath:
-          - /home/runner/work/unity-actions
+          - /home/runner/work/unity-actions/unity-actions
         buildsPath:
-          - /home/runner/work/unity-actions/builds
+          - home/runner/work/unity-actions/builds
         unityVersion:
           - 2020.1.4f1
         targetPlatform:
           - Android
+        projectName:
+          - plant-shop-tycoon
     steps:
       - uses: actions/checkout@v2.3.4
         with:
@@ -42,7 +44,8 @@ jobs:
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
           buildsPath: ${{ matrix.buildsPath }}
+          buildName: ${{ matrix.projectName }}
       - uses: actions/upload-artifact@v2.2.1
         with:
           name: ${{ matrix.targetPlatform }}-${{ steps.build.outputs.buildVersion }}
-          path: ${{ matrix.buildsPath }}/${{ matrix.targetPlatform }}
+          path: ${{ matrix.buildsPath }}/${{ matrix.projectName }}
