@@ -17,9 +17,11 @@ jobs:
       fail-fast: false
       matrix:
         projectPath:
-          - unity-actions
+          - ./unity-actions
         unityVersion:
           - 2020.1.4f1
+        targetPlatform:
+          - Android
     steps:
       - uses: actions/checkout@v2.3.4
         with:
@@ -30,11 +32,12 @@ jobs:
           key: Library-${{ matrix.projectPath }}
           restore-keys: |
             Library-
-      - uses: webbertakken/unity-test-runner@v1.7
-        id: tests
+      - uses: webbertakken/unity-builder@1.5
         with:
-          testMode: editmode
+          projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
+          targetPlatform: ${{ matrix.targetPlatform }}
       - uses: actions/upload-artifact@v2.2.1
         with:
-          name: Test results for EditMode
+          name: Build
+          path: build
