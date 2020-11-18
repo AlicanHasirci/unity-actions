@@ -45,8 +45,8 @@ jobs:
           buildsPath: ${{ matrix.buildsPath }}
           buildName: ${{ matrix.projectName }}
           buildMethod: Editor.BuildScript.CustomBuild
-          version: 0.0.1-${{ env.GITHUB_RUN_NUMBER }}
-          androidVersionCode: ${{ env.GITHUB_RUN_NUMBER }}
+          version: 0.0.1-${{ github.GITHUB_RUN_NUMBER }}
+          androidVersionCode: ${{ github.GITHUB_RUN_NUMBER }}
           allowDirtyBuild: true
       - uses: actions/upload-artifact@v2.2.1
         with:
