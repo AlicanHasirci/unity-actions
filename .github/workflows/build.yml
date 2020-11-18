@@ -38,13 +38,15 @@ jobs:
       - uses: webbertakken/unity-builder@v2.0-alpha-3
         id: build
         with:
-          versioning: Semantic
+          versioning: Custom
           projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
           buildsPath: ${{ matrix.buildsPath }}
           buildName: ${{ matrix.projectName }}
           buildMethod: Editor.BuildScript.CustomBuild
+          buildVersion: 0.0.1-${{ env.GITHUB_RUN_NUMBER }}
+          androidVersionCode: ${{ env.GITHUB_RUN_NUMBER }}
           allowDirtyBuild: true
       - uses: actions/upload-artifact@v2.2.1
         with:
