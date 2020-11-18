@@ -32,30 +32,29 @@ jobs:
         projectName:
           - plant-shop-tycoon
     steps:
-        - run: echo ${{ github.event.inputs.version }}b${{ env.BUILD_NUMBER }}
-      # - uses: actions/checkout@v2.3.4
-      #   with:
-      #     lfs: true
-      # - uses: actions/cache@v2.1.3
-      #   with:
-      #     path: ${{ matrix.projectPath }}/Library
-      #     key: Library-${{ matrix.targetPlatform }}
-      #     restore-keys: |
-      #       Library-${{ matrix.targetPlatform }}
-      # - uses: webbertakken/unity-builder@v2.0-alpha-3
-      #   id: build
-      #   with:
-      #     versioning: Custom
-      #     projectPath: ${{ matrix.projectPath }}
-      #     unityVersion: ${{ matrix.unityVersion }}
-      #     targetPlatform: ${{ matrix.targetPlatform }}
-      #     buildsPath: ${{ matrix.buildsPath }}
-      #     buildName: ${{ matrix.projectName }}
-      #     buildMethod: Editor.BuildScript.CustomBuild
-      #     version: 0.0.1-${{ github.GITHUB_RUN_NUMBER }}
-      #     androidVersionCode: ${{ github.GITHUB_RUN_NUMBER }}
-      #     allowDirtyBuild: true
-      # - uses: actions/upload-artifact@v2.2.1
-      #   with:
-      #     name: ${{ matrix.targetPlatform }}-${{ steps.build.outputs.buildVersion }}
-      #     path: ${{ matrix.buildsPath }}/${{ matrix.targetPlatform }}
+      - uses: actions/checkout@v2.3.4
+        with:
+          lfs: true
+      - uses: actions/cache@v2.1.3
+        with:
+          path: ${{ matrix.projectPath }}/Library
+          key: Library-${{ matrix.targetPlatform }}
+          restore-keys: |
+            Library-${{ matrix.targetPlatform }}
+      - uses: webbertakken/unity-builder@v2.0-alpha-3
+        id: build
+        with:
+          versioning: Custom
+          projectPath: ${{ matrix.projectPath }}
+          unityVersion: ${{ matrix.unityVersion }}
+          targetPlatform: ${{ matrix.targetPlatform }}
+          buildsPath: ${{ matrix.buildsPath }}
+          buildName: ${{ matrix.projectName }}
+          buildMethod: Editor.BuildScript.CustomBuild
+          version: ${{ github.event.inputs.version }}b${{ env.BUILD_NUMBER }}
+          androidVersionCode: ${{ env.BUILD_NUMBER }}
+          allowDirtyBuild: true
+      - uses: actions/upload-artifact@v2.2.1
+        with:
+          name: ${{ matrix.targetPlatform }}-${{ steps.build.outputs.buildVersion }}
+          path: ${{ matrix.buildsPath }}/${{ matrix.targetPlatform }}
