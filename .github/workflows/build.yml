@@ -58,3 +58,9 @@ jobs:
         with:
           name: ${{ matrix.targetPlatform }}-${{ steps.build.outputs.buildVersion }}
           path: ${{ matrix.buildsPath }}/${{ matrix.targetPlatform }}
+      - name: Upload to Google Drive
+        uses: satackey/action-google-drive@v1
+        with:
+          skicka-tokencache-json: ${{ secrets.SKICKA_TOKENCACHE_JSON }}
+          upload-from: ${{ matrix.buildsPath }}/${{ matrix.targetPlatform }}
+          upload-to: builds/${{ matrix.projectName }}
