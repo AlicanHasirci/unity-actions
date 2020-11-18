@@ -32,7 +32,7 @@ jobs:
         projectName:
           - plant-shop-tycoon
     steps:
-      -run: echo ${{ env.GITHUB_RUN_NUMBER }}
+        -run: echo ${{ env.GITHUB_RUN_NUMBER }}
       # - uses: actions/checkout@v2.3.4
       #   with:
       #     lfs: true
