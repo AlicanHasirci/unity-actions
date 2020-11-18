@@ -1,7 +1,12 @@
 name: Android Build 🛠
 
 on:
-  push: { branches: [main] }
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Build Version'
+        required: true
+        default: '0.0.1'
 
 env:
   UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
@@ -27,7 +32,7 @@ jobs:
         projectName:
           - plant-shop-tycoon
     steps:
-        - run: echo ${{ env.BUILD_NUMBER }}
+        - run: echo ${{ github.event.inputs.version }}b${{ env.BUILD_NUMBER }}
       # - uses: actions/checkout@v2.3.4
       #   with:
       #     lfs: true
