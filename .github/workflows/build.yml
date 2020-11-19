@@ -32,7 +32,7 @@ jobs:
         projectName:
           - plant-shop-tycoon
         fullVersion:
-          - ${{ github.event.inputs.version }}b${{ env.BUILD_NUMBER }}
+          - ${{ github.event.inputs.version }}b${{ github.run_number }}
     name: ${{ matrix.targetPlatform }} Build ${{ matrix.fullVersion }}
     steps:
 #       - name: Checkout
