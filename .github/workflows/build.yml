@@ -71,4 +71,4 @@ jobs:
         with:
           job_name: Test
           status: ${{ job.status }}
-          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took        
+          fields: repo,message,commit,author,action,ref,workflow,job,took        
