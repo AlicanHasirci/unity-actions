@@ -17,7 +17,6 @@ env:
 
 jobs:
   buildAndTestForSomePlatforms:
-    name: Android Build ${{ matrix.unityVersion }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -32,6 +31,9 @@ jobs:
           - Android
         projectName:
           - plant-shop-tycoon
+        fullVersion:
+          - ${{ github.event.inputs.version }}b${{ env.BUILD_NUMBER }}
+    name: ${{ matrix.targetPlatform }} Build ${{ matrix.fullVersion }}
     steps:
 #       - name: Checkout
 #         uses: actions/checkout@v2.3.4
@@ -69,6 +71,6 @@ jobs:
       - name: Slack Notify
         uses: 8398a7/action-slack@v3
         with:
-          job_name: Test
+          job_name: ${{ matrix.targetPlatform }} Build ${{ matrix.fullVersion }}
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,ref,workflow,job,took        
