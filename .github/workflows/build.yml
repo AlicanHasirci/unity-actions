@@ -73,4 +73,4 @@ jobs:
         with:
           job_name: ${{ matrix.targetPlatform }} Build ${{ matrix.fullVersion }}
           status: ${{ job.status }}
-          fields: repo,message,commit,author,action,ref,workflow,job,took        
+          fields: repo,message,commit,author,ref,workflow,job,took        
